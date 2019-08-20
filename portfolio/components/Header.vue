@@ -1,21 +1,23 @@
 <template>
-   <footer class="footer has-background-primary has-text-white">
-       <div class="container">
-           <div class="content has-text-centered is-info">
-               ヘッダー
-           </div>
-       </div>
-   </footer>
+   <header class="header">
+    <div class="">
+      <h1 class="header_title">
+        Segawa Akiraのポートフォリオサイト
+      </h1>
+    </div>
+   </header>
 </template>
 
 <script>
    export default {
-       name: "WorkNav"
+    //   name: "WorkNav"
    }
 </script>
 
 <style scoped lang="scss">
-   footer.footer {
-       padding: 0.5em;
-   }
+  .header {
+    &_title {
+
+    }
+  }
 </style>

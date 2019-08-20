@@ -1,21 +1,30 @@
 <template>
-   <footer class="footer has-background-primary has-text-white">
-       <div class="container">
-           <div class="content has-text-centered is-info">
-               ナビゲーション
-           </div>
-       </div>
-   </footer>
+    <div class="container">
+    <nav class="nav">
+        <ul>
+            <li>
+                <a href="">
+                    RECORD SHOP
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    PORTFOLIO
+                </a>
+            </li>
+        </ul>
+    </nav>
+   </div>
 </template>
 
 <script>
    export default {
-       name: "WorkNav"
+    //   name: "WorkNav"
    }
 </script>
 
 <style scoped lang="scss">
-   footer.footer {
-       padding: 0.5em;
+   .nav {
+    //    padding: 0.5em;
    }
 </style>
