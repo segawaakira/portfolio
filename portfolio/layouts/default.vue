@@ -1,8 +1,26 @@
 <template>
-  <div>
-    <nuxt />
+   <div class="site">
+    <header-component />
+    <div class="siteContent">
+      <nuxt class="has-text-centered"/>
+    </div>
+    <work-nav />
+    <footer-component />
   </div>
 </template>
+
+<script>
+  import HeaderComponent from '~/components/header.vue'
+  import WorkNav from '~/components/WorkNav.vue'
+  import FooterComponent from '~/components/Footer.vue'
+    export default {
+      components: {
+        "header-component": HeaderComponent,
+        "work-nav": WorkNav,
+        "footer-component": FooterComponent,
+      }
+    }
+</script>
 
 <style>
 html {
