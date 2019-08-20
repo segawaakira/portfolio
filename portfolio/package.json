@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@nuxtjs/bulma": "^1.2.1",
+    "firebase": "^6.2.4",
     "node-sass": "^4.12.0",
     "nuxt": "^2.0.0",
     "sass-loader": "^7.2.0",
-    "style-loader": "^1.0.0"
+    "style-loader": "^1.0.0",
+    "vuexfire": "^3.0.1"
   },
   "devDependencies": {}
 }
