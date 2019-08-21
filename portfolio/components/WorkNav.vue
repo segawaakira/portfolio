@@ -3,7 +3,7 @@
     <nav class="nav">
         <ul>
           <li v-for="portfolio in portfolios" :key="portfolio.id">
-                <a @click="$emit('drawPortfolio', portfolio.name,portfolio.term)">
+                <a @click="$emit('drawPortfolio', portfolio.name,portfolio.term,portfolio.description,portfolio.url)">
                     {{ portfolio.name }}
                 </a>
             </li>

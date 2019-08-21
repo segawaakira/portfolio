@@ -12,12 +12,13 @@ export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('portfolios', portfoliosRef)
   }),
-  add: firestoreAction((context, {name, term}) => {
+  add: firestoreAction((context, {name, term,description,url}) => {
     if(name.trim()) {
       portfoliosRef.doc(name).set({
         name: name,
         term: term,
-        done: false,
+        description: description,
+        url: url,
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
     }

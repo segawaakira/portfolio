@@ -10,6 +10,8 @@
     <div class="siteContent" v-if="drawName !== ''">
       <h1>{{ drawObj.name }}</h1>
       <p>{{ drawObj.term }}</p>
+      <p>{{ drawObj.description }}</p>
+      <p>{{ drawObj.url }}</p>
     </div>
 <!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
 
@@ -20,10 +22,7 @@
     <ul>
       <li v-for="portfolio in portfolios" :key="portfolio.id">
         <span v-if="portfolio.created">
-          <input
-          type="checkbox"
-          v-bind:checked="portfolio.done">
-          <span v-bind:class="{done:portfolio.done}">
+          <span>
             {{ portfolio.name }}{{ portfolio.term }}
           </span>
           <button v-on:click="remove(portfolio.id)">X</button>
@@ -34,6 +33,8 @@
       <form v-on:submit.prevent="add">  
         <input v-model="name">
         <input v-model="term">
+        <input v-model="description">
+        <input v-model="url">
         <button>Add</button>
       </form>
     </div>
@@ -59,7 +60,10 @@
           // 登録フォーム用data
           name: '',
           term: '',
-          done: false,
+          description: '',
+          url: '',
+          image: [],
+          technology: [],
           // 描画用data
           drawName: '',
           drawObj: [],
@@ -72,17 +76,30 @@
       },
       methods: {
         add() {
-          this.$store.dispatch('portfolios/add',{ name: this.name, term: this.term })
+          this.$store.dispatch('portfolios/add',{
+            name: this.name,
+            term: this.term,
+            description: this.description,
+            url: this.url,
+            // image: this.image,
+            // technology: this.technology,
+          })
           this.name = ''
           this.term = ''
+          this.description = ''
+          this.url = ''
+          this.image = []
+          this.technology = []
         },
         remove(id) {
           this.$store.dispatch('portfolios/remove',id)
         },
-        draw(name,term) {
+        draw(name,term,description,url) {
           this.drawName = name;
           this.drawObj.name = name;
           this.drawObj.term = term;
+          this.drawObj.description = description;
+          this.drawObj.url = url;
         }
       },
       computed: {
