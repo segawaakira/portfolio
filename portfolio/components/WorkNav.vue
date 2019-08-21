@@ -2,14 +2,9 @@
     <div class="container">
     <nav class="nav">
         <ul>
-            <li>
+          <li v-for="portfolio in portfolios" :key="portfolio.id">
                 <a href="">
-                    RECORD SHOP
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    PORTFOLIO
+                    {{ portfolio.name }}
                 </a>
             </li>
         </ul>
@@ -19,7 +14,15 @@
 
 <script>
    export default {
-    //   name: "WorkNav"
+    created: function() {
+        this.$store.dispatch('portfolios/init')
+    },
+    computed: {
+        portfolios() {
+            return this.$store.state.portfolios.portfolios
+        // return this.$store.getters['portfolios/orderdPortfolios']
+        }
+    },
    }
 </script>
 
