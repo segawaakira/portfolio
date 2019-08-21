@@ -25,11 +25,6 @@ export const actions = {
   remove: firestoreAction((context, id) => {
     portfoliosRef.doc(id).delete()
   }),
-  // toggle: firestoreAction((context, portfolio) => {
-  //   portfoliosRef.doc(portfolio.id).update({
-  //     done: !portfolio.done
-  //   })
-  // })
 }
 
 // export const getters = {

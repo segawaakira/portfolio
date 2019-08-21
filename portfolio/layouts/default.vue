@@ -22,8 +22,7 @@
         <span v-if="portfolio.created">
           <input
           type="checkbox"
-          v-bind:checked="portfolio.done"
-          @change="toggle(portfolio)">
+          v-bind:checked="portfolio.done">
           <span v-bind:class="{done:portfolio.done}">
             {{ portfolio.name }}{{ portfolio.term }}
           </span>
@@ -80,9 +79,6 @@
         remove(id) {
           this.$store.dispatch('portfolios/remove',id)
         },
-        // toggle(portfolio) {
-        //   this.$store.dispatch('portfolios/toggle',portfolio)
-        // }
         draw(name,term) {
           this.drawName = name;
           this.drawObj.name = name;
