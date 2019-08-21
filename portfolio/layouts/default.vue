@@ -12,6 +12,8 @@
       <p>{{ drawObj.term }}</p>
       <p>{{ drawObj.description }}</p>
       <p>{{ drawObj.url }}</p>
+      <p v-for="image in drawObj.images" :key="image">{{ image }}</p>
+      <p v-for="technology in drawObj.technologies" :key="technology">{{ technology }}</p>
     </div>
 <!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
 
@@ -35,6 +37,20 @@
         <input v-model="term">
         <input v-model="description">
         <input v-model="url">
+        <span v-for="image in images" :key="image" @click="removeImages(image)">
+          {{ image }}
+        </span>
+        <input v-model="newImage">
+        <a @click="addImages()">
+          Add image
+        </a>
+        <span v-for="technology in technologies" :key="technology" @click="removeTechnologies(technology)">
+          {{ technology }}
+        </span>
+        <input v-model="newTechnology">
+        <a @click="addTechnologies()">
+          Add technology
+        </a>
         <button>Add</button>
       </form>
     </div>
@@ -62,8 +78,10 @@
           term: '',
           description: '',
           url: '',
-          image: [],
-          technology: [],
+          newImage: '',
+          images: [],
+          newTechnology: '',
+          technologies: [],
           // 描画用data
           drawName: '',
           drawObj: [],
@@ -81,26 +99,54 @@
             term: this.term,
             description: this.description,
             url: this.url,
-            // image: this.image,
-            // technology: this.technology,
+            images: this.images,
+            technologies: this.technologies,
           })
           this.name = ''
           this.term = ''
           this.description = ''
           this.url = ''
-          this.image = []
-          this.technology = []
+          this.images = []
+          this.technologies = []
         },
         remove(id) {
           this.$store.dispatch('portfolios/remove',id)
         },
-        draw(name,term,description,url) {
+        draw(name,term,description,url,images,technologies) {
           this.drawName = name;
           this.drawObj.name = name;
           this.drawObj.term = term;
           this.drawObj.description = description;
           this.drawObj.url = url;
-        }
+          this.drawObj.images = images;
+          this.drawObj.technologies = technologies
+        },
+        addImages() {
+          if( this.newImage == '' ) {
+            return
+          }
+          this.images.push(this.newImage);
+          this.newImage = '';
+        },
+        removeImages(name) {
+          const idx = this.images.indexOf(name);
+          if(idx >= 0){
+            this.images.splice(idx, 1); 
+          }
+        },
+        addTechnologies() {
+          if( this.newTechnology == '' ) {
+            return
+          }
+          this.technologies.push(this.newTechnology);
+          this.newTechnology = '';
+        },
+        removeTechnologies(name) {
+          const idx = this.technologies.indexOf(name);
+          if(idx >= 0){
+            this.technologies.splice(idx, 1); 
+          }
+        },
       },
       computed: {
         portfolios() {
@@ -108,6 +154,9 @@
         // return this.$store.getters['portfolios/orderdPortfolios']
         }
       },
+      updated: function() {
+        this.drawObj.images
+      }
       // filters: {
       //   dateFilter: function(date) {
       //     return moment(date).format('YYYY/MM/DD HH:mm:ss')
