@@ -15,7 +15,8 @@
 
     <work-nav @drawPortfolio="draw" />
 
-<!-- ▼ FIREBASEへの登録 ▼ -->
+<!-- ▼ FIREBASEへの登録（develop環境のみ表示） ▼ -->
+  <div v-if="env !== 'production'">
     <ul>
       <li v-for="portfolio in portfolios" :key="portfolio.id">
         <span v-if="portfolio.created">
@@ -31,13 +32,14 @@
       </li>
     </ul>
     <div class="form">
-      <form v-on:submit.prevent="add">
+      <form v-on:submit.prevent="add">  
         <input v-model="name">
         <input v-model="term">
         <button>Add</button>
       </form>
     </div>
-<!-- ▲ FIREBASEへの登録 ▲ -->
+  </div>
+<!-- ▲ FIREBASEへの登録（develop環境のみ表示） ▲ -->
 
     <footer-component />
   </div>
@@ -62,6 +64,8 @@
           // 描画用data
           drawName: '',
           drawObj: [],
+          // 環境変数
+          env: process.env.NODE_ENV,
         }
       },
       created: function() {
