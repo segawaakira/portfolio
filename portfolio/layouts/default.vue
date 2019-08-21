@@ -73,9 +73,9 @@
           this.name = ''
           this.term = ''
         },
-        // remove(id) {
-        //   this.$store.dispatch('portfolios/remove',id)
-        // },
+        remove(id) {
+          this.$store.dispatch('portfolios/remove',id)
+        },
         // toggle(portfolio) {
         //   this.$store.dispatch('portfolios/toggle',portfolio)
         // }
