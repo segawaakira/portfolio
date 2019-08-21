@@ -15,7 +15,7 @@
           v-bind:checked="portfolio.done"
           @change="toggle(portfolio)">
           <span v-bind:class="{done:portfolio.done}">
-            {{ portfolio.name }}{{ portfolio.created.toDate() | dateFilter }}
+            {{ portfolio.name }}{{ portfolio.term }}{{ portfolio.created.toDate() | dateFilter }}
           </span>
           <button v-on:click="remove(portfolio.id)">X</button>
         </span>
@@ -24,6 +24,7 @@
     <div class="form">
       <form v-on:submit.prevent="add">
         <input v-model="name">
+        <input v-model="term">
         <button>Add</button>
       </form>
     </div>
@@ -46,6 +47,7 @@
       data: function() {
         return {
           name: '',
+          term: '',
           done: false
         }
       },
@@ -54,8 +56,9 @@
       },
       methods: {
         add() {
-          this.$store.dispatch('portfolios/add',this.name)
+          this.$store.dispatch('portfolios/add',{ name: this.name, term: this.term })
           this.name = ''
+          this.term = ''
         },
         // remove(id) {
         //   this.$store.dispatch('portfolios/remove',id)
