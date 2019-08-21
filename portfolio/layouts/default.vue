@@ -4,7 +4,16 @@
     <div class="siteContent">
       <nuxt class="has-text-centered"/>
     </div>
-    <work-nav />
+
+
+<!-- ▼ ナビゲーションでクリックされたポートフォリオを描画する ▼ -->
+    <div class="siteContent" v-if="drawName !== ''">
+      <h1>{{ drawObj.name }}</h1>
+      <p>{{ drawObj.term }}</p>
+    </div>
+<!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
+
+    <work-nav @drawPortfolio="draw" />
 
 <!-- ▼ FIREBASEへの登録 ▼ -->
     <ul>
@@ -15,7 +24,7 @@
           v-bind:checked="portfolio.done"
           @change="toggle(portfolio)">
           <span v-bind:class="{done:portfolio.done}">
-            {{ portfolio.name }}{{ portfolio.term }}{{ portfolio.created.toDate() | dateFilter }}
+            {{ portfolio.name }}{{ portfolio.term }}
           </span>
           <button v-on:click="remove(portfolio.id)">X</button>
         </span>
@@ -46,9 +55,13 @@
       },
       data: function() {
         return {
+          // 登録フォーム用data
           name: '',
           term: '',
-          done: false
+          done: false,
+          // 描画用data
+          drawName: '',
+          drawObj: [],
         }
       },
       created: function() {
@@ -66,6 +79,11 @@
         // toggle(portfolio) {
         //   this.$store.dispatch('portfolios/toggle',portfolio)
         // }
+        draw(name,term) {
+          this.drawName = name;
+          this.drawObj.name = name;
+          this.drawObj.term = term;
+        }
       },
       computed: {
         portfolios() {
