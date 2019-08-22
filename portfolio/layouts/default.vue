@@ -19,52 +19,99 @@
 
     <work-nav @drawPortfolio="draw" />
 
-<!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
-  <button @click="googleLogin" v-if="!isLogin">
-    Googleアカウントでログイン
-  </button>
-  <button @click="googleLogout" v-else>
-    Googleアカウントからログアウト
-  </button>
-<!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
-
 <!-- ▼ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▼ -->
   <div v-if="isLogin === true && uid === adminUid">
-    <ul>
-      <li v-for="portfolio in portfolios" :key="portfolio.id">
-        <span v-if="portfolio.created">
-          <span>
-            {{ portfolio.name }}{{ portfolio.term }}
-          </span>
-          <button v-on:click="remove(portfolio.id)">X</button>
-        </span>
-      </li>
-    </ul>
-    <div class="form">
-      <form v-on:submit.prevent="add">  
-        <input v-model="name">
-        <input v-model="term">
-        <input v-model="description">
-        <input v-model="url">
-        <span v-for="image in images" :key="image" @click="removeImages(image)">
-          {{ image }}
-        </span>
-        <input v-model="newImage">
-        <a @click="addImages()">
-          Add image
-        </a>
-        <span v-for="technology in technologies" :key="technology" @click="removeTechnologies(technology)">
-          {{ technology }}
-        </span>
-        <input v-model="newTechnology">
-        <a @click="addTechnologies()">
-          Add technology
-        </a>
-        <button>Add</button>
-      </form>
-    </div>
+
+    <section class="section">
+      <div class="container">
+        <div style="max-width:500px;width:100%;text-align:left;">
+          <h2 class="title is-3">作品一覧</h2>
+          <h3 class="subtitle is-6">Xボタンクリックで削除出来ます</h3>
+          <ul>
+            <li v-for="portfolio in portfolios" :key="portfolio.id">
+              <span v-if="portfolio.created">
+                <span>
+                  {{ portfolio.name }}{{ portfolio.term }}
+                </span>
+                <button v-on:click="remove(portfolio.id,portfolio.name)">X</button>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div style="max-width:500px;width:100%;text-align:left;">
+          <h2 class="title is-3">作品追加登録フォーム</h2>
+          <form v-on:submit.prevent="add">
+            <div class="field">
+            <label class="label">作品名</label>
+            <div class="control">
+              <input class="input" type="text" v-model="name">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">期間</label>
+            <div class="control">
+              <input class="input" type="text" v-model="term">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">説明</label>
+            <div class="control">
+              <textarea class="textarea" v-model="description"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">URL</label>
+            <div class="control">
+              <input class="input" type="text" v-model="url">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">画像</label>
+            <div class="control" v-for="image in images" :key="image" @click="removeImages(image)">
+              {{ image }}
+            </div>
+            <input class="input" type="text" v-model="newImage">
+            <a class="button is-white is-small" @click="addImages()">
+              画像を追加
+            </a>
+          </div>
+          <div class="field">
+            <label class="label">使用技術</label>
+            <div class="control" v-for="technology in technologies" :key="technology" @click="removeTechnologies(technology)">
+              {{ technology }}
+            </div>
+            <input class="input" type="text" v-model="newTechnology">
+            <a class="button is-white is-small" @click="addTechnologies()">
+              使用技術を追加
+            </a>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-link">送信する</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </section>
   </div>
 <!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
+
+<!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
+<section class="section">
+  <button class="button is-text" @click="googleLogin" v-if="!isLogin">
+    Googleアカウントでログイン
+  </button>
+  <button class="button is-text" @click="googleLogout" v-else>
+    Googleアカウントからログアウト
+  </button>
+</section>
+<!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
 <!-- ▼ 特定uid以外でログインした場合 ▼ -->
 <div v-if="isLogin === true && uid !== adminUid">
@@ -152,8 +199,11 @@
           this.images = []
           this.technologies = []
         },
-        remove(id) {
-          this.$store.dispatch('portfolios/remove',id)
+        remove(id,name) {
+          const result = window.confirm(name+'を削除してもよろしいですか？');
+          if( result ) {
+            this.$store.dispatch('portfolios/remove',id)
+          }
         },
         draw(name,term,description,url,images,technologies) {
           this.drawName = name;
