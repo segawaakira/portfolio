@@ -19,6 +19,10 @@
 
     <work-nav @drawPortfolio="draw" />
 
+<button @click="googleLogin">
+  Googleアカウントでログイン
+</button>
+
 <!-- ▼ FIREBASEへの登録（develop環境のみ表示） ▼ -->
   <div v-if="env !== 'production'">
     <ul>
@@ -62,6 +66,7 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
   import HeaderComponent from '~/components/header.vue'
   import WorkNav from '~/components/WorkNav.vue'
   import FooterComponent from '~/components/Footer.vue'
@@ -87,6 +92,8 @@
           drawObj: [],
           // 環境変数
           env: process.env.NODE_ENV,
+          // 認証周り
+          isLogin: false
         }
       },
       created: function() {
@@ -147,6 +154,13 @@
             this.technologies.splice(idx, 1); 
           }
         },
+        googleLogin : function() {
+          
+//          firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+          var provider = new firebase.auth.GoogleAuthProvider();
+          firebase.auth().signInWithRedirect(provider);
+          
+        }
       },
       computed: {
         portfolios() {
@@ -156,6 +170,16 @@
       },
       updated: function() {
         this.drawObj.images
+        firebase.auth().onAuthStateChanged(user=>{
+          console.log("userは"+user);
+          if(user){
+            this.isLogin=true;
+          }else{
+            this.isLogin=false;
+          };
+          console.log("logionは"+this.isLogin)
+        });
+
       }
       // filters: {
       //   dateFilter: function(date) {
