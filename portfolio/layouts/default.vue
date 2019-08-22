@@ -19,12 +19,17 @@
 
     <work-nav @drawPortfolio="draw" />
 
-<button @click="googleLogin">
-  Googleアカウントでログイン
-</button>
+<!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
+  <button @click="googleLogin" v-if="!isLogin">
+    Googleアカウントでログイン
+  </button>
+  <button @click="googleLogout" v-else>
+    Googleアカウントからログアウト
+  </button>
+<!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
-<!-- ▼ FIREBASEへの登録（develop環境のみ表示） ▼ -->
-  <div v-if="env !== 'production'">
+<!-- ▼ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▼ -->
+  <div v-if="isLogin === true && uid === adminUid">
     <ul>
       <li v-for="portfolio in portfolios" :key="portfolio.id">
         <span v-if="portfolio.created">
@@ -59,14 +64,22 @@
       </form>
     </div>
   </div>
-<!-- ▲ FIREBASEへの登録（develop環境のみ表示） ▲ -->
+<!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
+
+<!-- ▼ 特定uid以外でログインした場合 ▼ -->
+<div v-if="isLogin === true && uid !== adminUid">
+  <p>
+    管理者以外のGoogleアカウントでログインされています。
+  </p>
+</div>
+<!-- ▲ 特定uid以外でログインした場合 ▲ -->
 
     <footer-component />
   </div>
 </template>
 
 <script>
-  import firebase from 'firebase'
+  import firebase, { functions } from 'firebase'
   import HeaderComponent from '~/components/header.vue'
   import WorkNav from '~/components/WorkNav.vue'
   import FooterComponent from '~/components/Footer.vue'
@@ -92,12 +105,35 @@
           drawObj: [],
           // 環境変数
           env: process.env.NODE_ENV,
-          // 認証周り
-          isLogin: false
+          adminUid: process.env.GOOGLE_ID,
+          // Google認証周り
+          isLogin: false,
+          displayName : '',
+          email : '',
+          emailVerified : '',
+          photoURL : '',
+          isAnonymous : '',
+          uid : '',
+          providerData : '',
         }
       },
       created: function() {
         this.$store.dispatch('portfolios/init')
+        firebase.auth().onAuthStateChanged(user=>{
+          if(user){
+            this.isLogin = true
+            this.displayName = user.displayName;
+            this.email = user.email
+            this.emailVerified = user.emailVerified
+            this.photoURL = user.photoURL
+            this.isAnonymous = user.isAnonymous
+            this.uid = user.uid
+            this.providerData = user.providerData
+          }else{
+            this.isLogin=false;
+          };
+        });
+
       },
       methods: {
         add() {
@@ -155,11 +191,16 @@
           }
         },
         googleLogin : function() {
-          
-//          firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-          var provider = new firebase.auth.GoogleAuthProvider();
+          const provider = new firebase.auth.GoogleAuthProvider();
           firebase.auth().signInWithRedirect(provider);
-          
+        },
+        googleLogout : function() {
+          firebase.auth().signOut().then(()=>{
+            console.log("ログアウトしました");
+          })
+          .catch( (error)=>{
+            console.log(`ログアウト時にエラーが発生しました (${error})`);
+          });
         }
       },
       computed: {
@@ -170,16 +211,6 @@
       },
       updated: function() {
         this.drawObj.images
-        firebase.auth().onAuthStateChanged(user=>{
-          console.log("userは"+user);
-          if(user){
-            this.isLogin=true;
-          }else{
-            this.isLogin=false;
-          };
-          console.log("logionは"+this.isLogin)
-        });
-
       }
       // filters: {
       //   dateFilter: function(date) {
