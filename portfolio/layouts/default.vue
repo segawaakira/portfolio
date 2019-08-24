@@ -5,16 +5,41 @@
       <nuxt class="has-text-centered"/>
     </div>
 
-
 <!-- ▼ ナビゲーションでクリックされたポートフォリオを描画する ▼ -->
-    <div class="siteContent" v-if="drawName !== ''">
-      <h1>{{ drawObj.name }}</h1>
-      <p>{{ drawObj.term }}</p>
-      <p>{{ drawObj.description }}</p>
-      <p>{{ drawObj.url }}</p>
-      <p v-for="image in drawObj.images" :key="image">{{ image }}</p>
-      <p v-for="technology in drawObj.technologies" :key="technology">{{ technology }}</p>
+<section id="js-portfolio" class="section" v-if="drawName !== ''">
+    <div class="columns">
+      <div class="column is-full">
+        <h1 class="title is-1">{{ drawObj.name }}</h1>
+      </div>
     </div>
+    <div class="columns">
+      <div class="column is-half">
+        <h2 class="title is-6 has-text-weight-bold">制作時期</h2>
+        <div class="content">
+          <p>{{ drawObj.term }}</p>
+        </div>
+        <h2 class="title is-6 has-text-weight-bold">説明</h2>
+        <div class="content">
+          <p>{{ drawObj.description }}</p>
+        </div>
+        <h2 class="title is-6 has-text-weight-bold">URL</h2>
+        <div class="content">
+          <p><a :href="drawObj.url" target="_blank">{{ drawObj.url }}</a></p>
+        </div>
+        <h2 class="title is-6 has-text-weight-bold">使用技術</h2>
+        <div class="content">
+          <ul class="portfolio_tech">
+            <li v-for="technology in drawObj.technologies" :key="technology">{{ technology }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column is-half">
+        <figure v-for="image in drawObj.images" :key="image" >
+          <img v-bind:src="image">
+        </figure>
+    </div>
+  </div>
+</section>
 <!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
 
     <work-nav @drawPortfolio="draw" />
@@ -22,11 +47,11 @@
 <!-- ▼ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▼ -->
   <div v-if="isLogin === true && uid === adminUid">
 
-    <section class="section">
+    <section class="section has-background-white-bis">
       <div class="container">
         <div style="max-width:500px;width:100%;text-align:left;">
           <h2 class="title is-3">作品一覧</h2>
-          <h3 class="subtitle is-6">Xボタンクリックで削除出来ます</h3>
+          <h3 class="subtitle is-6 has-text-weight-bold">Xボタンクリックで削除出来ます</h3>
           <ul>
             <li v-for="portfolio in portfolios" :key="portfolio.id">
               <span v-if="portfolio.created">
@@ -41,7 +66,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section has-background-white-bis">
       <div class="container">
         <div style="max-width:500px;width:100%;text-align:left;">
           <h2 class="title is-3">作品追加登録フォーム</h2>
@@ -76,7 +101,7 @@
               {{ image }}
             </div>
             <input class="input" type="text" v-model="newImage">
-            <a class="button is-white is-small" @click="addImages()">
+            <a class="button is-text is-small" @click="addImages()">
               画像を追加
             </a>
           </div>
@@ -86,7 +111,7 @@
               {{ technology }}
             </div>
             <input class="input" type="text" v-model="newTechnology">
-            <a class="button is-white is-small" @click="addTechnologies()">
+            <a class="button is-text is-small" @click="addTechnologies()">
               使用技術を追加
             </a>
           </div>
@@ -103,25 +128,32 @@
 <!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
 
 <!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
-<section class="section">
-  <button class="button is-text" @click="googleLogin" v-if="!isLogin">
+<section class="section" style="text-align:right;" v-if="!isLogin">
+  <button class="button is-text" @click="googleLogin">
     Googleアカウントでログイン
   </button>
-  <button class="button is-text" @click="googleLogout" v-else>
+</section>
+<section class="section has-background-white-bis" style="text-align:right;" v-else>
+  <button class="button is-text" @click="googleLogout">
     Googleアカウントからログアウト
   </button>
 </section>
 <!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
 <!-- ▼ 特定uid以外でログインした場合 ▼ -->
-<div v-if="isLogin === true && uid !== adminUid">
-  <p>
-    管理者以外のGoogleアカウントでログインされています。
-  </p>
-</div>
+<section class="section has-background-white-bis" v-if="isLogin === true && uid !== adminUid">
+  <div class="notification is-danger">
+    <p>
+      管理者以外のGoogleアカウントでログインされています。
+    </p>
+  </div>
+</section>
 <!-- ▲ 特定uid以外でログインした場合 ▲ -->
 
     <footer-component />
+    <!-- ▼ LOADING ▼ -->
+    <div id="js-loading" class="button portfolio_loading is-loading"></div>
+    <!-- ▲ LOADING ▲ -->
   </div>
 </template>
 
@@ -163,6 +195,11 @@
           uid : '',
           providerData : '',
         }
+      },
+      mounted: function () {
+        setTimeout(function(){
+          document.getElementById("js-loading").style.display="none"
+        }, 1000);
       },
       created: function() {
         this.$store.dispatch('portfolios/init')
@@ -213,6 +250,10 @@
           this.drawObj.url = url;
           this.drawObj.images = images;
           this.drawObj.technologies = technologies
+          // ポートフォリオの箇所にスクロール
+          // setTimeout(function(){
+          //   document.getElementById("js-portfolio").style.display="none"
+          // }, 1000);
         },
         addImages() {
           if( this.newImage == '' ) {
@@ -251,6 +292,42 @@
           .catch( (error)=>{
             console.log(`ログアウト時にエラーが発生しました (${error})`);
           });
+        },
+        smoothLink(headH = 0) {
+          const interval = 10;               //スクロール処理を繰り返す間隔
+          const divisor = 8;                  //近づく割合（数値が大きいほどゆっくり近く）
+          const range = (divisor / 2) + 1;    //どこまで近づけば処理を終了するか(無限ループにならないように divisor から算出)
+          const links = document.querySelectorAll('a[href^="#"]');
+
+          for (let i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function (e) {
+              e.preventDefault();
+              let toY;
+              let nowY = window.pageYOffset;                       //現在のスクロール値
+              const href = e.target.getAttribute('href');          //href取得
+              const target = document.querySelector(href);         //リンク先の要素（ターゲット）取得
+              const targetRect = target.getBoundingClientRect();   //ターゲットの座標取得
+              const targetY = targetRect.top + nowY - headH;        //現在のスクロール値 & ヘッダーの高さを踏まえた座標
+              //スクロール終了まで繰り返す処理
+              (function doScroll() {
+                toY = nowY + Math.round((targetY - nowY) / divisor);  //次に移動する場所（近く割合は除数による。）
+                window.scrollTo(0, toY);                              //スクロールさせる
+                nowY = toY;                                           //nowY更新
+                if (document.body.clientHeight - window.innerHeight < toY) {
+                  //最下部にスクロールしても対象まで届かない場合は下限までスクロールして強制終了
+                  window.scrollTo(0, document.body.clientHeight);
+                  return;
+                }
+                if (toY >= targetY + range || toY <= targetY - range) {
+                  //+-rangeの範囲内へ近くまで繰り返す
+                  window.setTimeout(doScroll, interval);
+                } else {
+                  //+-range の範囲内にくれば正確な値へ移動して終了。
+                  window.scrollTo(0, targetY);
+                }
+              })();
+            });
+          }
         }
       },
       computed: {
@@ -261,6 +338,7 @@
       },
       updated: function() {
         this.drawObj.images
+        this.smoothLink()
       }
       // filters: {
       //   dateFilter: function(date) {
@@ -270,7 +348,7 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -317,5 +395,29 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.portfolio {
+  &_loading {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #fff;
+    transition: all 1s;
+  }
+  &_content {
+    display: flex;
+    &_l {
+
+    }
+    &_r {
+
+    }
+    
+  }
 }
 </style>

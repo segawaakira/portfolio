@@ -1,10 +1,8 @@
 <template>
-   <header class="header">
-    <div class="">
+   <header class="header section container">
       <h1 class="header_title">
-        Segawa Akiraのポートフォリオサイト
+          せがわあきらのポートフォリオサイト
       </h1>
-    </div>
    </header>
 </template>
 
@@ -17,7 +15,9 @@
 <style scoped lang="scss">
   .header {
     &_title {
-
+      -webkit-writing-mode: vertical-rl;
+          -ms-writing-mode: tb-rl;
+              writing-mode: vertical-rl;
     }
   }
 </style>
