@@ -1,6 +1,6 @@
 <template>
    <footer class="footer">
-        <p>&copy; 2018 HOGE inc.</p>
+        <p>Source code on <a href="https://github.com/segawaakira/portfolio" target="_blank">GitHub</a></p>
    </footer>
 </template>
 
