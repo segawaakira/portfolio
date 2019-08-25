@@ -49,3 +49,23 @@ FIREBASE_PROJECT_ID = '●●●'
 GOOGLE_ID = '●●●'
 AUTHOR_NAME = '●●●'
 ```
+
+## Firebaseの設定について
+
+### Database
+* Database > ルール　から、以下の通り設定します。
+　 ※読み取りはだれでも可能で、書き込みは、管理者のみ可能な設定にしています。
+``` 
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read;
+      allow write: if request.auth.uid == '{管理者のuid}';
+    }
+  }
+}
+```
+
+### Authentication
+* Authentication > ログイン方法　から、Googleのみ有効にする。
+* 上記と同じ画面で承認済みドメインに、公開するドメインを追加する。
