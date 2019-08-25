@@ -2,8 +2,8 @@
    <div class="site">
     <header-component />
     <div class="siteContent">
+    <div class="siteContent_inner">
       <nuxt class="has-text-centered"/>
-    </div>
 
 <!-- ▼ ナビゲーションでクリックされたポートフォリオを描画する ▼ -->
 <section id="js-portfolio" class="section" v-if="drawName !== ''">
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column is-half">
+      <div class="column">
         <h2 class="title is-6 has-text-weight-bold">制作時期</h2>
         <div class="content">
           <p>{{ drawObj.term }}</p>
@@ -33,8 +33,8 @@
           </ul>
         </div>
       </div>
-      <div class="column is-half">
-        <figure v-for="image in drawObj.images" :key="image" >
+      <div class="column is-two-thirds">
+        <figure v-for="image in drawObj.images" :key="image" style="text-align:center;">
           <img v-bind:src="image">
         </figure>
     </div>
@@ -150,6 +150,8 @@
 </section>
 <!-- ▲ 特定uid以外でログインした場合 ▲ -->
 
+    </div>
+    </div>
     <footer-component />
     <!-- ▼ LOADING ▼ -->
     <div id="js-loading" class="button portfolio_loading is-loading"></div>
@@ -395,6 +397,18 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.site {
+  background-color: #FAFAFA;
+}
+
+.siteContent {
+  margin-top: 100px;
+  &_inner {
+  margin: 0 auto;
+    max-width: 1200px;
+  }
 }
 
 .portfolio {
