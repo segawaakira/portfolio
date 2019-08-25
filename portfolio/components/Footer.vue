@@ -13,5 +13,6 @@
 <style scoped lang="scss">
 .footer {
     padding: 0.5em;
+    text-align: center;
 }
 </style>

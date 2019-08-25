@@ -1,14 +1,19 @@
 <template>
    <header class="header section">
       <h1 class="header_title">
-          せがわあきらのポートフォリオサイト
+        {{ authorName }}のポートフォリオサイト
       </h1>
    </header>
 </template>
 
 <script>
    export default {
-    //   name: "WorkNav"
+      data: function() {
+        return {
+          // 環境変数
+          authorName: process.env.AUTHOR_NAME,
+        }
+      },
    }
 </script>
 
@@ -22,10 +27,5 @@
     align-items: center;
     width: 100%;
     justify-content: center;
-    &_title {
-      // -webkit-writing-mode: vertical-rl;
-      //     -ms-writing-mode: tb-rl;
-      //         writing-mode: vertical-rl;
-    }
   }
 </style>
