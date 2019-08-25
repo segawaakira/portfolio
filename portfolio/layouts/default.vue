@@ -6,7 +6,7 @@
       <nuxt class="has-text-centered"/>
 
 <!-- ▼ ナビゲーションでクリックされたポートフォリオを描画する ▼ -->
-<section id="js-portfolio" class="section" v-if="drawName !== ''">
+<section id="js-portfolio" class="section portfolio_section" v-if="drawName !== ''">
     <div class="columns">
       <div class="column is-full">
         <h1 class="title is-size-1-tablet is-size-3-mobile">{{ drawObj.name }}</h1>
@@ -214,6 +214,7 @@
         }
       },
       mounted: function () {
+        // this.smoothLink()
       },
       created: function() {
         this.$store.dispatch('portfolios/init')
@@ -264,10 +265,6 @@
           this.drawObj.url = url;
           this.drawObj.images = images;
           this.drawObj.technologies = technologies
-          // ポートフォリオの箇所にスクロール
-          // setTimeout(function(){
-          //   document.getElementById("js-portfolio").style.display="none"
-          // }, 1000);
         },
         addImages() {
           if( this.newImage == '' ) {
@@ -307,42 +304,6 @@
             console.log(`ログアウト時にエラーが発生しました (${error})`);
           });
         },
-        smoothLink(headH = 0) {
-          const interval = 10;               //スクロール処理を繰り返す間隔
-          const divisor = 8;                  //近づく割合（数値が大きいほどゆっくり近く）
-          const range = (divisor / 2) + 1;    //どこまで近づけば処理を終了するか(無限ループにならないように divisor から算出)
-          const links = document.querySelectorAll('a[href^="#"]');
-
-          for (let i = 0; i < links.length; i++) {
-            links[i].addEventListener('click', function (e) {
-              e.preventDefault();
-              let toY;
-              let nowY = window.pageYOffset;                       //現在のスクロール値
-              const href = e.target.getAttribute('href');          //href取得
-              const target = document.querySelector(href);         //リンク先の要素（ターゲット）取得
-              const targetRect = target.getBoundingClientRect();   //ターゲットの座標取得
-              const targetY = targetRect.top + nowY - headH;        //現在のスクロール値 & ヘッダーの高さを踏まえた座標
-              //スクロール終了まで繰り返す処理
-              (function doScroll() {
-                toY = nowY + Math.round((targetY - nowY) / divisor);  //次に移動する場所（近く割合は除数による。）
-                window.scrollTo(0, toY);                              //スクロールさせる
-                nowY = toY;                                           //nowY更新
-                if (document.body.clientHeight - window.innerHeight < toY) {
-                  //最下部にスクロールしても対象まで届かない場合は下限までスクロールして強制終了
-                  window.scrollTo(0, document.body.clientHeight);
-                  return;
-                }
-                if (toY >= targetY + range || toY <= targetY - range) {
-                  //+-rangeの範囲内へ近くまで繰り返す
-                  window.setTimeout(doScroll, interval);
-                } else {
-                  //+-range の範囲内にくれば正確な値へ移動して終了。
-                  window.scrollTo(0, targetY);
-                }
-              })();
-            });
-          }
-        },
         window:onload = function() {
           const loading = document.getElementById("js-loading")
           setTimeout(function(){
@@ -356,18 +317,11 @@
       computed: {
         portfolios() {
           return this.$store.state.portfolios.portfolios
-        // return this.$store.getters['portfolios/orderdPortfolios']
         }
       },
       updated: function() {
         this.drawObj.images
-        this.smoothLink()
       }
-      // filters: {
-      //   dateFilter: function(date) {
-      //     return moment(date).format('YYYY/MM/DD HH:mm:ss')
-      //   }
-      // }
     }
 </script>
 
@@ -406,6 +360,9 @@
     &.is-loaded {
         opacity: 0;
     }
+  }
+  &_section {
+    min-height: 100vh;
   }
   &_content {
     display: flex;
