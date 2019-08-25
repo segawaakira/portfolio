@@ -9,7 +9,7 @@
 “/_nuxt
 ↓
 "/portfolio/_nuxt
-```　
+```
 
 ## portfolio
 ### 開発用ディレクトリ
