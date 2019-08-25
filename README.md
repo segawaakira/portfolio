@@ -1,8 +1,11 @@
-# ディレクトリ構成
+## URL
+https://segawaakira.github.io/portfolio/
 
-## docs
-### 公開用（GitHub Pages）ディレクトリ
-#### デプロイ手順
+## ディレクトリ構成
+
+### docs
+#### 公開用（GitHub Pages）ディレクトリ
+##### デプロイ手順
 * 開発してbuildしたファイルをdocsにコピーする。
 * 以下の通り置換する。
 ```　
@@ -11,6 +14,6 @@
 "/portfolio/_nuxt
 ```
 
-## portfolio
-### 開発用ディレクトリ
+### portfolio
+#### 開発用ディレクトリ
 詳細は、portfolioディレクトリのREADMEを参照してください。
