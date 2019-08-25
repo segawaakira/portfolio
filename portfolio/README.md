@@ -44,6 +44,8 @@ portfolioディレクトリのルートに.envファイルを作成します。
 firebaseのproject idと、管理用のGoogleアカウントのuidと、使用する人の名前を設定します。
 
 ### 参考.envファイル
+``` 
 FIREBASE_PROJECT_ID = '●●●'
 GOOGLE_ID = '●●●'
 AUTHOR_NAME = '●●●'
+```
