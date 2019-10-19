@@ -40,8 +40,9 @@ export default {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
-    '@nuxtjs/dotenv'
+    // '@nuxtjs/bulma',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources'
   ],
   /*
   ** Build configuration
@@ -54,10 +55,29 @@ export default {
         }
       }
     },
+    cssSourceMap : true,
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
     }
-  }
+  },
+  /*
+  ** style-resources-moduleで、グローバルで変数やmixinなどを使えるように
+  */
+  styleResources: {
+  //  sass: [
+  //   '@/assets/sass/variable.sass'
+  //  ],
+   scss: [
+    '@/assets/scss/ress.scss',
+    '@/assets/scss/_valiable.scss',
+    // '@/assets/scss/_mixin.scss'
+   ],
+  //  stylus: [
+  //   '@/assets/stylus/layout.styl'
+  //  ]
+  },
+  cssSourceMap : true,
+  sourceMap: true,
 }
