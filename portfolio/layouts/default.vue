@@ -1,5 +1,7 @@
 <template>
    <div class="site">
+    <div id="cursor"></div>
+    <div id="follower"></div>  
     <header-component />
     <div class="siteContent">
     <div class="siteContent_inner">
@@ -155,7 +157,10 @@
     <footer-component />
     <!-- ▼ LOADING ▼ -->
     <div id="js-loading" class="portfolio_loading">
-      <div class="sk-fading-circle">
+      <div id="container">
+        NOW LOADING
+      </div>
+      <!-- <div class="sk-fading-circle">
         <div class="sk-circle1 sk-circle"></div>
         <div class="sk-circle2 sk-circle"></div>
         <div class="sk-circle3 sk-circle"></div>
@@ -168,7 +173,7 @@
         <div class="sk-circle10 sk-circle"></div>
         <div class="sk-circle11 sk-circle"></div>
         <div class="sk-circle12 sk-circle"></div>
-      </div>
+      </div> -->
     </div>
     <!-- ▲ LOADING ▲ -->
   </div>
@@ -214,7 +219,70 @@
         }
       },
       mounted: function () {
-        // this.smoothLink()
+        // プログレスバー
+        var bar = new ProgressBar.Line(container, {
+          strokeWidth: 4,
+          easing: 'easeInOut',
+          duration: 1400,
+          color: '#FFEA82',
+          trailColor: '#eee',
+          trailWidth: 1,
+          svgStyle: {width: '100%', height: '100%'}
+        });
+
+        bar.animate(1.0);
+      // ポインター
+      var
+        cursor = document.getElementById("cursor"),
+        follower = document.getElementById("follower"),
+        cWidth = 8, //カーソルの大きさ
+        fWidth = 40, //フォロワーの大きさ
+        delay = 10, //数字を大きくするとフォロワーがより遅れて来る
+        mouseX = 0, //マウスのX座標
+        mouseY = 0, //マウスのY座標
+        posX = 0, //フォロワーのX座標
+        posY = 0; //フォロワーのX座標
+
+        //カーソルの遅延アニメーション
+        //ほんの少ーーーしだけ遅延させる 0.001秒
+        TweenMax.to({}, .001, {
+          repeat: -1,
+          onRepeat: function() {
+            posX += (mouseX - posX) / delay;
+            posY += (mouseY - posY) / delay;
+            
+            TweenMax.set(follower, {
+                css: {    
+                  left: posX - (fWidth / 2),
+                  top: posY - (fWidth / 2)
+                }
+            });
+            
+            TweenMax.set(cursor, {
+                css: {    
+                  left: mouseX - (cWidth / 2),
+                  top: mouseY - (cWidth / 2)
+                }
+            });
+          }
+        });
+
+        document.onmousemove = function (e){
+          mouseX = e.pageX;
+          mouseY = e.pageY;
+        };
+
+        var linkTag = document.getElementsByTagName('a');
+        for(var i = 0; i < linkTag.length; i++) {
+          linkTag[i].onmouseenter = function (e){
+            cursor.classList.add("is-active");
+            follower.classList.add("is-active");
+          };
+          linkTag[i].onmouseleave = function (e){
+            cursor.classList.remove("is-active");
+            follower.classList.remove("is-active");
+          };
+        }
       },
       created: function() {
         this.$store.dispatch('portfolios/init')
@@ -325,8 +393,76 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+
+/* プログレスバー */
+#container {
+  margin: 20px;
+  width: 400px;
+  height: 8px;
+}
+
+
+
+    /* カーソル */
+    #cursor,
+    #follower {
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0; 
+      pointer-events: none;
+    }
+
+    #cursor {
+      width: 8px;
+      height: 8px;
+      background-color: #000;
+      z-index: 1001;
+    }
+
+    #follower {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      opacity: 0.5;
+      background-color: #fdfe00;
+      z-index: 1000;
+      transition: transform ease .1s;
+      text-align: center;
+    }
+    #follower span {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: bold;
+      transform: scale(0);
+    }
+    #follower.is-active {
+      transform: scale(3);
+    }
+
+    .btn {
+        display: inline-block;
+        width: 160px;
+        margin: 16px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1;
+    }
+    .btn a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      padding: 16px;
+      background-color: #000;
+      cursor: none;
+    }
+
 .site {
+    cursor: none;
   background-color: #FAFAFA;
 }
 

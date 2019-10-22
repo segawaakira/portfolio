@@ -1,22 +1,24 @@
 <template>
   <div>
-
   </div>
 </template>
 
 <script>
 export default {
+  mounted: function () {
+  },
 }
 </script>
 
 <style>
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center; */
 }
 
 .title {

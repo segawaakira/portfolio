@@ -279,21 +279,25 @@
     cursor: default;
   }
   
+/*!
+ * ▲ ress.css ここまで ▲
+ */
 
 
-/* # =================================================================
-   # デフォルトのressから追記
-   # ================================================================= */
-  html {
-    visibility: hidden;
-  }
-  html.wf-active {
-    visibility: visible;
-  }
+  // html {
+  //   visibility: hidden;
+  //   background-color: #FAFAFA!important;
+  // }
+  // html.wf-active {
+  //   visibility: visible;
+  // }
   body {
     font-family: "tbudgothic-std", sans-serif;
     font-style: normal;
     font-size: 14px;
+    position: relative;
+    cursor: none;
+    background-color: #fafafa!important;
   }
   a {
     text-decoration: none;
@@ -313,8 +317,14 @@
     max-width: 100%;
     vertical-align: bottom;
   }
-  body {
-    button {
-      color: #fcc!important;
-    }
+
+    /* テキスト選択color */
+    ::selection {
+      background: #000;
+      color: #fff;
   }
+  ::-moz-selection {
+      background: #000;
+      color: #fff;
+  }
+

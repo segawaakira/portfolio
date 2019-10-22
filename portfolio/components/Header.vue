@@ -1,8 +1,24 @@
 <template>
    <header class="header section">
       <h1 class="header_title">
-        {{ authorName }}のポートフォリオサイト
+        {{ authorName }}
       </h1>
+      <nav class="header_menu">
+        <ul>
+          <li>
+            <a href="/">PORTFOLIO</a>
+          </li>
+          <li>
+            <a href="/">ABOUT</a>
+          </li>
+          <li>
+            <a href="/">BLOG</a>
+          </li>
+          <li>
+            <a href="/">CONTACT</a>
+          </li>
+        </ul>
+      </nav>
    </header>
 </template>
 
@@ -20,12 +36,13 @@
 <style scoped lang="scss">
   .header {
     background-color: #FAFAFA;
-    position: absolute;
-    top: 0;
     display: flex;
     height: 100px;
-    align-items: center;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+
+    &_menu {
+
+    }
   }
 </style>

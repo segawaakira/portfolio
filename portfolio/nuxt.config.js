@@ -14,6 +14,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js' },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js' }
     ]
   },
   /*
@@ -71,7 +75,7 @@ export default {
   //  ],
    scss: [
     '@/assets/scss/ress.scss',
-    '@/assets/scss/_valiable.scss',
+    '@/assets/scss/_variable.scss',
     // '@/assets/scss/_mixin.scss'
    ],
   //  stylus: [

@@ -1,7 +1,7 @@
 <template>
-  <section class="section worknav">
+  <section class="section">
     <div class="container">
-      <nav class="nav">
+      <nav class="worknav">
         <ul>
         <li v-for="portfolio in portfolios" :key="portfolio.id">
           <a href="#js-portfolio" @click="$emit('drawPortfolio', 
@@ -12,7 +12,13 @@
                 portfolio.images,
                 portfolio.technologies,
                 )">
-                {{ portfolio.name }}
+                <!-- <p class="worknav_name"> -->
+                  {{ portfolio.name }}
+                  <br>
+                <!-- </p> -->
+                <!-- <p class="worknav_term"> -->
+                  <span>{{ portfolio.term }}</span>
+                <!-- </p> -->
             </a>
           </li>
         </ul>
@@ -80,7 +86,18 @@
 </script>
 
 <style scoped lang="scss">
-   .worknav {
-     margin-top: -100px;
-   }
+  .worknav {
+    ul {
+      li {
+        margin-bottom: 50px;
+        a {
+          font-size: 24px;
+          color: #333;
+          span {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
 </style>
