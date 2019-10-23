@@ -9,13 +9,13 @@
 
 <!-- ▼ ナビゲーションでクリックされたポートフォリオを描画する ▼ -->
 <section id="js-portfolio" class="section portfolio_section" v-if="drawName !== ''">
-    <div class="columns">
+    <div class="portfolio_columns">
       <div class="column is-full">
         <h1 class="title is-size-1-tablet is-size-3-mobile">{{ drawObj.name }}</h1>
       </div>
     </div>
-    <div class="columns">
-      <div class="column">
+    <div class="portfolio_columns">
+      <div class="portfolio_column">
         <h2 class="title is-6 has-text-weight-bold">制作時期</h2>
         <div class="content">
           <p>{{ drawObj.term }}</p>
@@ -35,7 +35,7 @@
           </ul>
         </div>
       </div>
-      <div class="column is-two-thirds">
+      <div class="portfolio_column is-two-thirds">
         <figure v-for="image in drawObj.images" :key="image" style="text-align:center;">
           <img v-bind:src="image">
         </figure>
@@ -477,6 +477,7 @@
   h1 {
     margin-bottom: 30px;
     line-height: 2.5rem;
+    font-size: 48px;
   }
 }
 

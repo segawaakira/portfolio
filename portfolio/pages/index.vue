@@ -10,7 +10,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
 
 .container {
   margin: 0 auto;
@@ -22,12 +23,12 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; */
   display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 1rem 0 0.5rem;
   letter-spacing: 1px;
 }
 
@@ -41,5 +42,28 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+
+.portfolio{
+  &_columns {
+    display: flex;
+    flex-direction: row;
+    @media screen and ( max-width:$break) {
+      flex-direction: column;
+    }
+  }
+  &_column {
+    &.is-two-thirds {
+      width: 66.6666%;
+      flex: none;
+    }
+    @media screen and ( max-width:$break) {
+      width: 100%;
+    }
+  }
+  &_tech {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
 }
 </style>
