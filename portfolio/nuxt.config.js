@@ -13,7 +13,8 @@ export default {
       { hid: 'description', name: 'description', content: authorName + 'のポートフォリオサイト' || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Montserrat:400,700|Noto+Sans+JP:400,700&display=swap' }
     ],
     script: [
       { src: 'https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js' },

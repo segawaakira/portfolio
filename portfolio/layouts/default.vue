@@ -130,7 +130,7 @@
 <!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
 
 <!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
-<section class="section" style="text-align:right;" v-if="!isLogin">
+<!-- <section class="section" style="text-align:right;" v-if="!isLogin">
   <button class="button is-text is-small" @click="googleLogin">
     Googleアカウントでログイン
   </button>
@@ -139,7 +139,7 @@
   <button class="button is-text is-small" @click="googleLogout">
     Googleアカウントからログアウト
   </button>
-</section>
+</section> -->
 <!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
 <!-- ▼ 特定uid以外でログインした場合 ▼ -->

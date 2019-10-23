@@ -42,12 +42,17 @@
     justify-content: space-between;
     padding: 20px 50px;
 
+    &_title {
+      font-size: 32px;
+      font-weight: bold;
+    }
     &_menu {
       ul {
         li {
             margin-bottom: 1rem;
           a {
             font-size: 16px;
+            font-weight: bold;
             color: #333;
           }
         }
