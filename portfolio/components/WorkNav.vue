@@ -11,6 +11,7 @@
                 portfolio.url,
                 portfolio.images,
                 portfolio.technologies,
+                portfolio.id
                 )">
                 <!-- <p class="worknav_name"> -->
                   {{ portfolio.name }}

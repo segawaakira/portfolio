@@ -44,7 +44,7 @@
 </section>
 <!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
 
-    <work-nav @drawPortfolio="draw" />
+<work-nav @drawPortfolio="draw" v-if="drawWorkNav" />
 
 <!-- ▼ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▼ -->
   <div v-if="isLogin === true && uid === adminUid">
@@ -152,8 +152,15 @@
 </section>
 <!-- ▲ 特定uid以外でログインした場合 ▲ -->
 
-    </div>
-    </div>
+    </div><!-- / .siteContent_inner -->
+    <!-- ▼ NEXT、PREVボタン ▼ -->
+    <section class="portfolio_link" v-if="drawWorkLink">
+      <a @click="prev">PREV</a>
+      <a href="#__nuxt" @click="backToTop">BACK TO TOP</a>
+      <a @click="next">NEXT</a>
+    </section>
+    <!-- ▲ NEXT、PREVボタン ▲ -->
+    </div><!-- / .siteContent -->
     <footer-component />
     <!-- ▼ LOADING ▼ -->
     <div id="js-loading" class="portfolio_loading">
@@ -204,6 +211,8 @@
           // 描画用data
           drawName: '',
           drawObj: [],
+          drawWorkNav: true,
+          drawWorkLink: false,
           // 環境変数
           env: process.env.NODE_ENV,
           adminUid: process.env.GOOGLE_ID,
@@ -325,14 +334,29 @@
             this.$store.dispatch('portfolios/remove',id)
           }
         },
-        draw(name,term,description,url,images,technologies) {
+        draw(name,term,description,url,images,technologies,id) {
           this.drawName = name;
           this.drawObj.name = name;
           this.drawObj.term = term;
           this.drawObj.description = description;
           this.drawObj.url = url;
           this.drawObj.images = images;
-          this.drawObj.technologies = technologies
+          this.drawObj.technologies = technologies;
+          this.drawObj.id = id;
+          this.drawWorkNav = false;
+          this.drawWorkLink = true;
+        },
+        next() {
+
+        },
+        prev() {
+
+        },
+        backToTop() {
+          this.smoothLink();
+          this.drawWorkNav = true;
+          this.drawWorkLink = false;
+          this.drawName = '';
         },
         addImages() {
           if( this.newImage == '' ) {
@@ -380,6 +404,45 @@
               loading.style.display = 'none'
             }, 1000);
           }, 1000);
+        },
+        smoothLink(){
+          const headH = 0;
+          const interval = 10;               //スクロール処理を繰り返す間隔
+          const divisor = 8;                  //近づく割合（数値が大きいほどゆっくり近く）
+          const range = (divisor / 2) + 1;    //どこまで近づけば処理を終了するか(無限ループにならないように divisor から算出)
+          const links = document.querySelectorAll('a[href^="#"]');
+
+          for (let i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function (e) {
+              e.preventDefault();
+              let toY;
+              let nowY = window.pageYOffset;                       //現在のスクロール値
+              const href = e.target.getAttribute('href');          //href取得
+              const target = document.querySelector(href);         //リンク先の要素（ターゲット）取得
+              const targetRect = target.getBoundingClientRect();   //ターゲットの座標取得
+              const targetY = targetRect.top + nowY - headH;        //現在のスクロール値 & ヘッダーの高さを踏まえた座標
+                setTimeout(function(){
+              //スクロール終了まで繰り返す処理
+              (function doScroll() {
+                toY = nowY + Math.round((targetY - nowY) / divisor);  //次に移動する場所（近く割合は除数による。）
+                window.scrollTo(0, toY);                              //スクロールさせる
+                nowY = toY;                                           //nowY更新
+                if (document.body.clientHeight - window.innerHeight < toY) {
+                  //最下部にスクロールしても対象まで届かない場合は下限までスクロールして強制終了
+                  window.scrollTo(0, document.body.clientHeight);
+                  return;
+                }
+                if (toY >= targetY + range || toY <= targetY - range) {
+                  //+-rangeの範囲内へ近くまで繰り返す
+                  window.setTimeout(doScroll, interval);
+                } else {
+                  //+-range の範囲内にくれば正確な値へ移動して終了。
+                  window.scrollTo(0, targetY);
+                }
+              })();
+                }, 100);
+            });
+          }
         },
       },
       computed: {
@@ -511,6 +574,10 @@
 
     }
     
+  }
+  &_link {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
