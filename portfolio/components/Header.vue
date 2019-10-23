@@ -40,8 +40,18 @@
     height: 100px;
     width: 100%;
     justify-content: space-between;
+    padding: 20px 50px;
 
     &_menu {
+      ul {
+        li {
+            margin-bottom: 1rem;
+          a {
+            font-size: 16px;
+            color: #333;
+          }
+        }
+      }
 
     }
   }

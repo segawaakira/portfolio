@@ -468,6 +468,7 @@
 
 .siteContent {
   margin-top: 100px;
+  padding: 0 50px;
   &_inner {
     margin: 0 auto;
     max-width: 1200px;
