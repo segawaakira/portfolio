@@ -12,9 +12,10 @@ export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('portfolios', portfoliosRef)
   }),
-  add: firestoreAction((context, {name, term,description,url,images,technologies}) => {
+  add: firestoreAction((context, {order,name, term,description,url,images,technologies}) => {
     if(name.trim()) {
       portfoliosRef.doc(name).set({
+        order: order,
         name: name,
         term: term,
         description: description,
@@ -30,8 +31,9 @@ export const actions = {
   }),
 }
 
-// export const getters = {
-//   orderdPortfolios: state => {
-//     return _.sortBy(state.portfolios, 'created')
-//   }
-// }
+export const getters = {
+  orderdPortfolios: (state) => {
+    return _.orderBy(state.portfolios, 'order', 'asc')
+    //     return _.sortBy(state.portfolios, 'created')
+  }
+}

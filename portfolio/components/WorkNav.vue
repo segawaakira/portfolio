@@ -35,8 +35,8 @@
   },
   computed: {
     portfolios() {
-      return this.$store.state.portfolios.portfolios
-    // return this.$store.getters['portfolios/orderdPortfolios']
+    //  return this.$store.state.portfolios.portfolios
+    return this.$store.getters['portfolios/orderdPortfolios']
     }
   },
   methods: {

@@ -1,4 +1,5 @@
 require('dotenv').config()
+import webpack from 'webpack'
 const authorName = process.env.AUTHOR_NAME
 export default {
   mode: 'spa',
@@ -65,7 +66,12 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        _: 'lodash'
+      })
+    ]
   },
   /*
   ** style-resources-moduleで、グローバルで変数やmixinなどを使えるように
