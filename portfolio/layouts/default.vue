@@ -138,16 +138,18 @@
 <!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
 
 <!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
-<!-- <section class="section" style="text-align:right;" v-if="!isLogin">
-  <button class="button is-text is-small" @click="googleLogin">
-    Googleアカウントでログイン
-  </button>
-</section>
-<section class="section has-background-white-bis" style="text-align:right;" v-else>
-  <button class="button is-text is-small" @click="googleLogout">
-    Googleアカウントからログアウト
-  </button>
-</section> -->
+<div v-if="drawWorkNav === true">
+  <section class="portfolio_login" v-if="!isLogin">
+    <a @click="googleLogin">
+      Googleアカウントでログイン
+    </a>
+  </section>
+  <section class="portfolio_login" v-else>
+    <a @click="googleLogout">
+      Googleアカウントからログアウト
+    </a>
+  </section>
+</div>
 <!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
 <!-- ▼ 特定uid以外でログインした場合 ▼ -->
@@ -771,6 +773,15 @@
     display: none;
     &.is_active {
       display: block;
+    }
+  }
+  &_login {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    padding: 0 50px;
+    @media screen and ( max-width:$break) {
+      padding: 0 20px;
     }
   }
 }
