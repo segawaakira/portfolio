@@ -9,7 +9,7 @@ https://segawaakira.github.io/portfolio/
 * 開発してbuildしたファイルをdocsにコピーする。
 * 以下の通り置換する。
 ```　
-“/_nuxt
+"/_nuxt
 ↓
 "/portfolio/_nuxt
 ```

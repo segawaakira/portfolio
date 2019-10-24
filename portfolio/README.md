@@ -1,6 +1,6 @@
 # portfolio
 
-## Build Setup
+## コマンド
 
 ``` bash
 # install dependencies
