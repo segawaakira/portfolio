@@ -3,15 +3,15 @@
     <div class="container">
       <nav class="worknav">
         <ul>
-        <li v-for="portfolio in portfolios" :key="portfolio.id">
-          <a href="#js-portfolio" @click="$emit('drawPortfolio', 
+        <li v-for="portfolio in portfolios" :key="portfolio.id" class="worknav_item">
+          <a :id="itemToId('js-portfolio-order-',portfolio.order)" href="#js-portfolio" @click="$emit('drawPortfolio', 
+                portfolio.order,
                 portfolio.name,
                 portfolio.term,
                 portfolio.description,
                 portfolio.url,
                 portfolio.images,
                 portfolio.technologies,
-                portfolio.id
                 )">
                 <!-- <p class="worknav_name"> -->
                   {{ portfolio.name }}
@@ -78,6 +78,10 @@
         });
       }
     },
+    itemToId: function(id,index){
+      const res = id + index;
+      return res;
+    }
   },
   updated: function() {
     this.smoothLink()

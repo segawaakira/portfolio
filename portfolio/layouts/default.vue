@@ -44,7 +44,9 @@
 </section>
 <!-- ▲ ナビゲーションでクリックされたポートフォリオを描画する ▲ -->
 
-<work-nav @drawPortfolio="draw" v-if="drawWorkNav" />
+<div class="portfolio_worknav" :class="{ is_active: drawWorkNav === true }">
+  <work-nav @drawPortfolio="draw" />
+</div>
 
 <!-- ▼ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▼ -->
   <div v-if="isLogin === true && uid === adminUid">
@@ -136,7 +138,7 @@
 <!-- ▲ FIREBASEへの登録（特定uidでログインしている時のみ表示） ▲ -->
 
 <!-- ▼ GOOGLE LOGIN or LOGOUTボタン ▼ -->
-<section class="section" style="text-align:right;" v-if="!isLogin">
+<!-- <section class="section" style="text-align:right;" v-if="!isLogin">
   <button class="button is-text is-small" @click="googleLogin">
     Googleアカウントでログイン
   </button>
@@ -145,7 +147,7 @@
   <button class="button is-text is-small" @click="googleLogout">
     Googleアカウントからログアウト
   </button>
-</section>
+</section> -->
 <!-- ▲ GOOGLE LOGIN or LOGOUTボタン ▲ -->
 
 <!-- ▼ 特定uid以外でログインした場合 ▼ -->
@@ -161,9 +163,9 @@
     </div><!-- / .siteContent_inner -->
     <!-- ▼ NEXT、PREVボタン ▼ -->
     <section class="portfolio_link" v-if="drawWorkLink">
-      <a @click="prev">PREV</a>
+      <a href="#js-portfolio" @click="prev" class="portfolio_link_prev" :class="{ is_active: drawWorkNum !== 1 }">PREV</a>
       <a href="#__nuxt" @click="backToTop">BACK TO TOP</a>
-      <a @click="next">NEXT</a>
+      <a href="#js-portfolio" @click="next" class="portfolio_link_next" :class="{ is_active: drawWorkNum !== drawWorkLength }">NEXT</a>
     </section>
     <!-- ▲ NEXT、PREVボタン ▲ -->
     </div><!-- / .siteContent -->
@@ -206,6 +208,8 @@
           drawObj: [],
           drawWorkNav: true,
           drawWorkLink: false,
+          drawWorkNum: '',
+          drawWorkLength: '',
           // 環境変数
           env: process.env.NODE_ENV,
           adminUid: process.env.GOOGLE_ID,
@@ -329,7 +333,9 @@
             this.$store.dispatch('portfolios/remove',id)
           }
         },
-        draw(name,term,description,url,images,technologies,id) {
+        draw(order,name,term,description,url,images,technologies) {
+          this.drawWorkNum = order;
+          this.drawObj.order = order;
           this.drawName = name;
           this.drawObj.name = name;
           this.drawObj.term = term;
@@ -337,15 +343,18 @@
           this.drawObj.url = url;
           this.drawObj.images = images;
           this.drawObj.technologies = technologies;
-          this.drawObj.id = id;
           this.drawWorkNav = false;
           this.drawWorkLink = true;
         },
         next() {
-
+          const nextNum = this.drawWorkNum + 1;
+          const nextLinkId = "js-portfolio-order-" + nextNum;
+          document.getElementById(nextLinkId).click()
         },
         prev() {
-
+          const prevNum = this.drawWorkNum - 1;
+          const prevLinkId = "js-portfolio-order-" + prevNum;
+          document.getElementById(prevLinkId).click()
         },
         backToTop() {
           this.smoothLink();
@@ -447,6 +456,8 @@
       },
       updated: function() {
         this.drawObj.images
+        this.drawWorkLength = document.getElementsByClassName("worknav_item").length
+        console.log(this.drawWorkNum)
       }
     }
 </script>
@@ -573,6 +584,19 @@
   &_link {
     display: flex;
     justify-content: space-between;
+    a.portfolio_link_prev,
+    a.portfolio_link_next {
+      display: none;
+      &.is_active {
+        display: block;
+      }
+    }
+  }
+  &_worknav {
+    display: none;
+    &.is_active {
+      display: block;
+    }
   }
 }
 
