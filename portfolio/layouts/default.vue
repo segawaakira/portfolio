@@ -161,14 +161,28 @@
 <!-- ▲ 特定uid以外でログインした場合 ▲ -->
 
     </div><!-- / .siteContent_inner -->
+    </div><!-- / .siteContent -->
     <!-- ▼ NEXT、PREVボタン ▼ -->
     <section class="portfolio_link" v-if="drawWorkLink">
-      <a href="#js-portfolio" @click="prev" class="portfolio_link_prev" :class="{ is_active: drawWorkNum !== 1 }">PREV</a>
-      <a href="#__nuxt" @click="backToTop">BACK TO TOP</a>
-      <a href="#js-portfolio" @click="next" class="portfolio_link_next" :class="{ is_active: drawWorkNum !== drawWorkLength }">NEXT</a>
+      <a href="#js-portfolio" @click="prev" class="portfolio_link_prev" :class="{ is_active: drawWorkNum !== 1 }">
+        <div class="portfolio_link_wrap is-prev">
+          PREV
+          <span class="portfolio_link_border is-prev"></span>
+        </div>
+      </a>
+      <a href="#__nuxt" class="portfolio_link_back" @click="backToTop">
+        <div class="portfolio_link_wrap">
+          BACK TO TOP
+        </div>
+      </a>
+      <a href="#js-portfolio" @click="next" class="portfolio_link_next" :class="{ is_active: drawWorkNum !== drawWorkLength }">
+        <div class="portfolio_link_wrap is-next">
+          NEXT
+          <span class="portfolio_link_border is-next"></span>
+        </div>
+      </a>
     </section>
     <!-- ▲ NEXT、PREVボタン ▲ -->
-    </div><!-- / .siteContent -->
     <footer-component />
     <!-- ▼ LOADING ▼ -->
     <div id="js-loading" class="portfolio_loading">
@@ -586,11 +600,97 @@
   &_link {
     display: flex;
     justify-content: space-between;
-    a.portfolio_link_prev,
-    a.portfolio_link_next {
+    padding: 50px 0 200px;
+    position: relative;
+    overflow: hidden;
+    font-size: 16px;
+    @media screen and ( max-width:$break) {
+      font-size: 14px;
+    }
+    &_wrap {
+      width: 200px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+      @media screen and ( max-width:$break) {
+        width: 100px;
+      }
+      &.is-prev, &.is-next {
+        @media screen and ( max-width:$break) {
+          width: 80px;
+        }
+      } 
+      &.is-prev {
+        align-items: flex-end;
+      } 
+      &.is-next {
+        align-items: flex-start;
+      } 
+      @media screen and ( max-width:$break) {
+        .portfolio_link_border {
+          &.is-prev {
+            left: 0;
+          } 
+          &.is-next {
+            right: 0;
+          } 
+        }
+      }
+      &:hover {
+        .portfolio_link_border {
+          &.is-prev {
+            left: 0;
+          } 
+          &.is-next {
+            right: 0;
+          } 
+        }
+      }
+    }
+    &_border {
+      width: 100%;
+      border-bottom: 1px solid #333;
+      position: absolute;
+      bottom: 0;
+      transition: all .3s ease-out;
+      &.is-prev {
+        left: -100%;
+      } 
+      &.is-next {
+        right: -100%;
+      } 
+    }
+    a {
+      color: #333;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    &_prev,
+    &_next {
       display: none;
+      position: absolute;
       &.is_active {
         display: block;
+      }
+    }
+    &_prev{
+      left: 0%;
+    }
+    &_next{
+      right: 0%;
+    }
+    &_back{
+      position: absolute;
+      left: 50%;
+      width: 200px;
+      text-align: center;
+      margin-left: -100px;
+      @media screen and ( max-width:$break) {
+        width: 100px;
+        margin-left: -50px;
       }
     }
   }
