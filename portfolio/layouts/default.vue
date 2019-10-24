@@ -371,7 +371,6 @@
           document.getElementById(prevLinkId).click()
         },
         backToTop() {
-          this.smoothLink();
           this.drawWorkNav = true;
           this.drawWorkLink = false;
           this.drawName = '';
@@ -414,16 +413,8 @@
             console.log(`ログアウト時にエラーが発生しました (${error})`);
           });
         },
-        window:onload = function() {
-          const loading = document.getElementById("js-loading")
-          setTimeout(function(){
-            loading.classList.add("is-loaded")
-            setTimeout(function(){
-              loading.style.display = 'none'
-            }, 1000);
-          }, 1000);
-        },
         smoothLink(){
+          console.log("aaaa")
           const headH = 0;
           const interval = 10;               //スクロール処理を繰り返す間隔
           const divisor = 8;                  //近づく割合（数値が大きいほどゆっくり近く）
@@ -437,7 +428,7 @@
               let nowY = window.pageYOffset;                       //現在のスクロール値
               const href = e.target.getAttribute('href');          //href取得
               const target = document.querySelector(href);         //リンク先の要素（ターゲット）取得
-              const targetRect = target.getBoundingClientRect();   //ターゲットの座標取得
+              const targetRect = 0;
               const targetY = targetRect.top + nowY - headH;        //現在のスクロール値 & ヘッダーの高さを踏まえた座標
                 setTimeout(function(){
               //スクロール終了まで繰り返す処理
@@ -462,6 +453,15 @@
             });
           }
         },
+        window:onload = function() {
+          const loading = document.getElementById("js-loading")
+          setTimeout(function(){
+            loading.classList.add("is-loaded")
+            setTimeout(function(){
+              loading.style.display = 'none'
+            }, 1000);
+          }, 1000);
+        },
       },
       computed: {
         portfolios() {
@@ -471,7 +471,7 @@
       updated: function() {
         this.drawObj.images
         this.drawWorkLength = document.getElementsByClassName("worknav_item").length
-        console.log(this.drawWorkNum)
+        this.smoothLink();
       }
     }
 </script>
@@ -555,7 +555,7 @@
 }
 
 .siteContent {
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 0 50px 100px;
   @media screen and ( max-width:$break) {
     margin-top: 50px;
@@ -568,10 +568,12 @@
   }
   h1 {
     margin-bottom: 50px;
+    margin-top: 50px;
     line-height: 2.5rem;
     font-size: 36px;
     font-weight: normal;
     @media screen and ( max-width:$break) {
+      margin-top: 30px;
       margin-bottom: 20px;
       font-size: 24px;
     }
