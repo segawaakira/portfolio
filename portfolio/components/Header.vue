@@ -5,15 +5,12 @@
       </h1>
       <nav class="header_menu">
         <ul>
-          <li>
+          <!-- <li>
             <a href="/">PORTFOLIO</a>
           </li>
           <li>
             <a href="/">ABOUT</a>
-          </li>
-          <li>
-            <a href="/">BLOG</a>
-          </li>
+          </li> -->
           <li>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfFugwqIZ1WnhbpKjhd8ON3WUP-misybIPusA1ULCgjcaOX6A/viewform" target="_blank">CONTACT</a>
           </li>
@@ -37,23 +34,38 @@
   .header {
     background-color: #FAFAFA;
     display: flex;
-    height: 100px;
+    align-items: baseline;
     width: 100%;
     justify-content: space-between;
-    padding: 20px 50px;
+    padding: 50px 50px 30px;
+    @media screen and ( max-width:$break) {
+      padding: 20px 30px;
+    }
 
     &_title {
       font-size: 32px;
       font-weight: bold;
+      @media screen and ( max-width:$break) {
+        font-size: 20px;
+      }
     }
     &_menu {
       ul {
+        display: flex;
         li {
-            margin-bottom: 1rem;
+            margin-right: 30px;
+            &:last-child {
+              margin-right: 0;
+            }
           a {
             font-size: 16px;
-            font-weight: bold;
             color: #333;
+            &:hover {
+              text-decoration: none;
+            }
+            @media screen and ( max-width:$break) {
+              font-size: 14px;
+            }
           }
         }
       }

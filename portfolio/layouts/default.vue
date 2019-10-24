@@ -496,6 +496,9 @@
       top: 0;
       left: 0; 
       pointer-events: none;
+      @media screen and ( max-width:$break) {
+        display: none!important;
+      }
     }
 
     #cursor {
@@ -541,11 +544,11 @@
       text-decoration: none;
       padding: 16px;
       background-color: #000;
-      cursor: none;
+      // cursor: none;
     }
 
 .site {
-  cursor: none;
+  // cursor: none;
   background-color: #FAFAFA;
   min-height: 100vh;
   position: relative;
@@ -555,6 +558,7 @@
   margin-top: 100px;
   padding: 0 50px 100px;
   @media screen and ( max-width:$break) {
+    margin-top: 50px;
     padding: 0 30px 50px;
   }
   &_inner {
@@ -566,6 +570,7 @@
     margin-bottom: 50px;
     line-height: 2.5rem;
     font-size: 36px;
+    font-weight: normal;
     @media screen and ( max-width:$break) {
       margin-bottom: 20px;
       font-size: 24px;

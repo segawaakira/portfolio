@@ -12,12 +12,11 @@
 
 <style scoped lang="scss">
 .footer {
-    padding: 0.5em;
     text-align: center;
     position: absolute;
     bottom: 0;
     width: 100%;
     margin-top: -50px;
-    padding-top: 50px;
+    padding: 50px 0 20px;
 }
 </style>

@@ -296,8 +296,10 @@
     font-style: normal;
     font-size: 14px;
     position: relative;
-    cursor: none;
     background-color: #fafafa!important;
+    @media screen and ( min-width:768px) {
+      cursor: none;
+    }
   }
   a {
     text-decoration: none;
