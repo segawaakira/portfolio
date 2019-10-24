@@ -56,9 +56,12 @@ export default {
     &.is-two-thirds {
       width: 66.6666%;
       flex: none;
-    }
-    @media screen and ( max-width:$break) {
-      width: 100%;
+      padding: 0 30px;
+      @media screen and ( max-width:$break) {
+        width: 100%;
+        margin-top: 20px;
+        padding: 0;
+      }
     }
   }
   &_tech {

@@ -98,8 +98,17 @@
         a {
           font-size: 24px;
           color: #333;
+          @media screen and ( max-width:$break) {
+            font-size: 20px;
+          }
           span {
             font-size: 16px;
+            @media screen and ( max-width:$break) {
+              font-size: 14px;
+            }
+          }
+          &:hover {
+            text-decoration: none;
           }
         }
       }

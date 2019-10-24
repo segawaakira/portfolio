@@ -554,15 +554,22 @@
 .siteContent {
   margin-top: 100px;
   padding: 0 50px 100px;
+  @media screen and ( max-width:$break) {
+    padding: 0 30px 50px;
+  }
   &_inner {
     margin: 0 auto;
     max-width: 1200px;
     word-break: break-all;
   }
   h1 {
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     line-height: 2.5rem;
-    font-size: 48px;
+    font-size: 36px;
+    @media screen and ( max-width:$break) {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
   }
 }
 
