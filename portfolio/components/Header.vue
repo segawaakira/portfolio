@@ -1,7 +1,7 @@
 <template>
    <header class="header section">
       <h1 class="header_title">
-        <a href="/">
+        <a href="/portfolio/">
           {{ authorName }}
         </a>
       </h1>
