@@ -531,13 +531,15 @@
     }
 
 .site {
-    cursor: none;
+  cursor: none;
   background-color: #FAFAFA;
+  min-height: 100vh;
+  position: relative;
 }
 
 .siteContent {
   margin-top: 100px;
-  padding: 0 50px;
+  padding: 0 50px 100px;
   &_inner {
     margin: 0 auto;
     max-width: 1200px;

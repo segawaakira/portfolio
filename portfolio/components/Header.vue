@@ -15,7 +15,7 @@
             <a href="/">BLOG</a>
           </li>
           <li>
-            <a href="/">CONTACT</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfFugwqIZ1WnhbpKjhd8ON3WUP-misybIPusA1ULCgjcaOX6A/viewform" target="_blank">CONTACT</a>
           </li>
         </ul>
       </nav>
