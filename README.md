@@ -7,11 +7,15 @@ https://segawaakira.github.io/portfolio/
 公開用（GitHub Pages）ディレクトリ
 ##### デプロイ手順
 * 開発してbuildしたファイルをdocsにコピーする。
-* 以下の通り置換する。
+* 以下２箇所置換する。
 ```　
 "/_nuxt
 ↓
 "/portfolio/_nuxt
+
+/fonts/icomoon
+↓
+/portfolio/fonts/icomoon
 ```
 
 ### portfolio
