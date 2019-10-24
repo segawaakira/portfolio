@@ -83,7 +83,7 @@ export default {
    scss: [
     '@/assets/scss/ress.scss',
     '@/assets/scss/_variable.scss',
-    // '@/assets/scss/_mixin.scss'
+    '@/assets/scss/_font.scss'
    ],
   //  stylus: [
   //   '@/assets/stylus/layout.styl'

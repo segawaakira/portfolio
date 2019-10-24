@@ -1,12 +1,19 @@
 <template>
    <footer class="footer">
-        <p>Source code on <a href="https://github.com/segawaakira/portfolio" target="_blank">GitHub</a></p>
+       <p>&copy; {{ authorName }} all rights reserved.</p>
+        <!-- <p>Source code on <a href="https://github.com/segawaakira/portfolio" target="_blank">GitHub</a></p> -->
    </footer>
 </template>
 
 <script>
    export default {
-       name: "Footer"
+       name: "Footer",
+      data: function() {
+        return {
+          // 環境変数
+          authorName: process.env.AUTHOR_NAME,
+        }
+      },
    }
 </script>
 

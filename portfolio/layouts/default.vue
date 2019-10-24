@@ -244,65 +244,12 @@
           strokeWidth: 4,
           easing: 'easeInOut',
           duration: 1400,
-          color: '#FFEA82',
+          color: '#7E93D5',
           trailColor: '#eee',
           trailWidth: 1,
           svgStyle: {width: '100%', height: '100%'}
         });
-
         bar.animate(1.0);
-      // ポインター
-      var
-        cursor = document.getElementById("cursor"),
-        follower = document.getElementById("follower"),
-        cWidth = 8, //カーソルの大きさ
-        fWidth = 40, //フォロワーの大きさ
-        delay = 10, //数字を大きくするとフォロワーがより遅れて来る
-        mouseX = 0, //マウスのX座標
-        mouseY = 0, //マウスのY座標
-        posX = 0, //フォロワーのX座標
-        posY = 0; //フォロワーのX座標
-
-        //カーソルの遅延アニメーション
-        //ほんの少ーーーしだけ遅延させる 0.001秒
-        TweenMax.to({}, .001, {
-          repeat: -1,
-          onRepeat: function() {
-            posX += (mouseX - posX) / delay;
-            posY += (mouseY - posY) / delay;
-            
-            TweenMax.set(follower, {
-                css: {    
-                  left: posX - (fWidth / 2),
-                  top: posY - (fWidth / 2)
-                }
-            });
-            
-            TweenMax.set(cursor, {
-                css: {    
-                  left: mouseX - (cWidth / 2),
-                  top: mouseY - (cWidth / 2)
-                }
-            });
-          }
-        });
-
-        document.onmousemove = function (e){
-          mouseX = e.pageX;
-          mouseY = e.pageY;
-        };
-
-        var linkTag = document.getElementsByTagName('a');
-        for(var i = 0; i < linkTag.length; i++) {
-          linkTag[i].onmouseenter = function (e){
-            cursor.classList.add("is-active");
-            follower.classList.add("is-active");
-          };
-          linkTag[i].onmouseleave = function (e){
-            cursor.classList.remove("is-active");
-            follower.classList.remove("is-active");
-          };
-        }
       },
       created: function() {
         this.$store.dispatch('portfolios/init')
@@ -374,6 +321,10 @@
           this.drawWorkNav = true;
           this.drawWorkLink = false;
           this.drawName = '';
+          const cursor = document.getElementById("cursor")
+          const follower = document.getElementById("follower")
+          cursor.classList.remove("is-active");
+          follower.classList.remove("is-active");
         },
         addImages() {
           if( this.newImage == '' ) {
@@ -453,14 +404,121 @@
             });
           }
         },
+        pointer() {
+          // ポインター
+          var
+            cursor = document.getElementById("cursor"),
+            follower = document.getElementById("follower"),
+            cWidth = 8, //カーソルの大きさ
+            fWidth = 40, //フォロワーの大きさ
+            delay = 10, //数字を大きくするとフォロワーがより遅れて来る
+            mouseX = 0, //マウスのX座標
+            mouseY = 0, //マウスのY座標
+            posX = 0, //フォロワーのX座標
+            posY = 0; //フォロワーのX座標
+
+            //カーソルの遅延アニメーション
+            //ほんの少ーーーしだけ遅延させる 0.001秒
+            TweenMax.to({}, .001, {
+              repeat: -1,
+              onRepeat: function() {
+                posX += (mouseX - posX) / delay;
+                posY += (mouseY - posY) / delay;
+                
+                TweenMax.set(follower, {
+                    css: {    
+                      left: posX - (fWidth / 2),
+                      top: posY - (fWidth / 2)
+                    }
+                });
+                
+                TweenMax.set(cursor, {
+                    css: {    
+                      left: mouseX - (cWidth / 2),
+                      top: mouseY - (cWidth / 2)
+                    }
+                });
+              }
+            });
+
+          document.onmousemove = function (e){
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+          };
+
+          var linkTag = document.getElementsByTagName('a');
+          for(var i = 0; i < linkTag.length; i++) {
+            linkTag[i].onmouseenter = function (e){
+              cursor.classList.add("is-active");
+              follower.classList.add("is-active");
+            };
+            linkTag[i].onmouseleave = function (e){
+              cursor.classList.remove("is-active");
+              follower.classList.remove("is-active");
+            };
+          }
+        },
         window:onload = function() {
           const loading = document.getElementById("js-loading")
           setTimeout(function(){
             loading.classList.add("is-loaded")
             setTimeout(function(){
+              // ポインター
+              var
+                cursor = document.getElementById("cursor"),
+                follower = document.getElementById("follower"),
+                cWidth = 8, //カーソルの大きさ
+                fWidth = 40, //フォロワーの大きさ
+                delay = 10, //数字を大きくするとフォロワーがより遅れて来る
+                mouseX = 0, //マウスのX座標
+                mouseY = 0, //マウスのY座標
+                posX = 0, //フォロワーのX座標
+                posY = 0; //フォロワーのX座標
+
+                //カーソルの遅延アニメーション
+                //ほんの少ーーーしだけ遅延させる 0.001秒
+                TweenMax.to({}, .001, {
+                  repeat: -1,
+                  onRepeat: function() {
+                    posX += (mouseX - posX) / delay;
+                    posY += (mouseY - posY) / delay;
+                    
+                    TweenMax.set(follower, {
+                        css: {    
+                          left: posX - (fWidth / 2),
+                          top: posY - (fWidth / 2)
+                        }
+                    });
+                    
+                    TweenMax.set(cursor, {
+                        css: {    
+                          left: mouseX - (cWidth / 2),
+                          top: mouseY - (cWidth / 2)
+                        }
+                    });
+                  }
+                });
+
+              document.onmousemove = function (e){
+                mouseX = e.pageX;
+                mouseY = e.pageY;
+              };
+
+              var linkTag = document.getElementsByTagName('a');
+              for(var i = 0; i < linkTag.length; i++) {
+                linkTag[i].onmouseenter = function (e){
+                  cursor.classList.add("is-active");
+                  follower.classList.add("is-active");
+                };
+                linkTag[i].onmouseleave = function (e){
+                  cursor.classList.remove("is-active");
+                  follower.classList.remove("is-active");
+                };
+              }
               loading.style.display = 'none'
             }, 1000);
           }, 1000);
+
         },
       },
       computed: {
@@ -471,6 +529,7 @@
       updated: function() {
         this.drawObj.images
         this.drawWorkLength = document.getElementsByClassName("worknav_item").length
+        this.pointer();
         this.smoothLink();
       }
     }
@@ -514,8 +573,8 @@
       align-items: center;
       width: 40px;
       height: 40px;
-      opacity: 0.5;
-      background-color: #fdfe00;
+      opacity: 0.3;
+      background-color: $colorPurple;
       z-index: 1000;
       transition: transform ease .1s;
       text-align: center;
@@ -527,7 +586,7 @@
       transform: scale(0);
     }
     #follower.is-active {
-      transform: scale(3);
+      transform: scale(2.5);
     }
 
     .btn {
@@ -590,7 +649,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1002;
     background-color: #fff;
     opacity: 1;
     transition: all 1s;
